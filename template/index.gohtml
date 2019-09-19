@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/static/css/shorturl.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-reboot.css">
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/bootstrap.bundle.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/popper.min.js"></script>
+    <title>Short URL</title>
+</head>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-9 mx-auto">
+            <div class="card card-signin my-8">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Create click-worthy link</h5>
+                    <form class="form-signin" action="/shortURL" method="POST">
+                        <div class="form-label-group">
+                            <label for="inputURL" class="sr-only">URL</label>
+                            <input type="url" name="full_url" id="inputURL" class="form-control"
+                                   placeholder="Shorten your link" autocomplete="off" required=""
+                                   id="validationDefault01"
+                            >
+                        </div>
+                        <div id="centered_button">
+                            <button class="btn btn-lg btn-success" type="submit">Shorten</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
