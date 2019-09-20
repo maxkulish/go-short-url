@@ -14,24 +14,30 @@
     <script src="/static/js/popper.min.js"></script>
     <title>Short URL</title>
 </head>
+<body>
 <div class="container">
     <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-9 mx-auto">
             <div class="card card-signin my-8">
                 <div class="card-body">
                     <h5 class="card-title text-center">Create click-worthy link</h5>
-                    <form class="form-signin" action="/shortURL" method="POST">
+                    <form class="form-signin" action="/createURL" method="POST">
                         <div class="form-label-group">
                             <label for="inputURL" class="sr-only">URL</label>
                             <input type="url" name="full_url" id="inputURL" class="form-control"
                                    placeholder="Shorten your link" autocomplete="off" required=""
-                                   id="validationDefault01"
-                            >
+                                   id="validationDefault01">
                         </div>
+                        {{if .Visible}}
+                            <div class="container">
+                                <div class="alert alert-success">
+                                    <strong>ShortURL:</strong> <a href="{{.FinalLink}}"> {{.FinalLink}}</a>
+                                </div>
+                            </div>
+                        {{end}}
                         <div id="centered_button">
                             <button class="btn btn-lg btn-success" type="submit">Shorten</button>
                         </div>
-
                     </form>
                 </div>
             </div>

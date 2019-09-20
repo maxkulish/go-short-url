@@ -1,7 +1,8 @@
 package main
 
 import (
-	"fmt"
+	"go-short-url/cache"
+	"go-short-url/controller"
 	"html/template"
 	"log"
 	"net/http"
@@ -11,7 +12,7 @@ var homeTemplate *template.Template
 
 func home(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
-		http.Error(w, "Forbidden HTTP Method", http.StatusForbidden)
+		http.Error(w, "Forbidden HTTP Method", http.StatusMethodNotAllowed)
 	}
 
 	homeTemplate = template.Must(template.ParseFiles("template/index.gohtml"))
@@ -22,20 +23,11 @@ func home(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func shortURL(w http.ResponseWriter, r *http.Request) {
-
-	if r.Method != "POST" {
-		http.Error(w, "Forbidden HTTP Method", http.StatusForbidden)
-	}
-
-	if err := r.ParseForm(); err != nil {
-		http.Error(w, "internal server error", http.StatusInternalServerError)
-		log.Fatal("error parsing form", err)
-	}
-	_, _ = fmt.Fprintln(w, r.PostForm["full_url"])
-}
-
 func main() {
+
+	newCache := cache.NewCache()
+	userURL := controller.NewUserURL(newCache)
+	shortURL := controller.NewShortURL(newCache)
 
 	// Static server
 	staticServer := http.FileServer(http.Dir("./static"))
@@ -44,7 +36,10 @@ func main() {
 	// GET method
 	http.HandleFunc("/", home)
 	// Post method
-	http.HandleFunc("/shortURL", shortURL)
+	http.HandleFunc("/createURL", userURL.CreateURL)
+
+	// GET /short/:shortURL
+	http.HandleFunc("/short/", shortURL.HandleShortURL)
 
 	log.Fatal(http.ListenAndServe(":3000", nil))
 }
