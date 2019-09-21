@@ -39,7 +39,7 @@ func main() {
 	http.HandleFunc("/createURL", userURL.CreateURL)
 
 	// GET /short/:shortURL
-	http.HandleFunc("/short/", shortURL.HandleShortURL)
+	http.HandleFunc("/s/", shortURL.HandleShortURL)
 
-	log.Fatal(http.ListenAndServe(":3000", nil))
+	log.Fatal(http.ListenAndServe(":8000", nil))
 }

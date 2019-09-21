@@ -121,6 +121,10 @@ div#centered_button {
     background-color: #3b5998;
 }
 
+#inputURL {
+    padding-bottom: 1rem;
+}
+
 /* Fallback for Edge
 -------------------------------------------------- */
 

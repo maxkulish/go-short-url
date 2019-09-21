@@ -23,7 +23,7 @@ func NewShortURL(c *cache.Cache) *ShortURL {
 func (su *ShortURL) HandleShortURL(w http.ResponseWriter, r *http.Request) {
 
 	path := r.URL.Path
-	su.ShortKey = strings.TrimPrefix(path, "/short/")
+	su.ShortKey = strings.TrimPrefix(path, "/s/")
 
 	if bytes := su.Cache.Get(su.ShortKey); bytes == nil {
 		http.Error(w, "Not Found", http.StatusNotFound)

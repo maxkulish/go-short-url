@@ -28,13 +28,6 @@
                                    placeholder="Shorten your link" autocomplete="off" required=""
                                    id="validationDefault01">
                         </div>
-                        {{if .Visible}}
-                            <div class="container">
-                                <div class="alert alert-success">
-                                    <strong>ShortURL:</strong> <a href="{{.FinalLink}}"> {{.FinalLink}}</a>
-                                </div>
-                            </div>
-                        {{end}}
                         <div id="centered_button">
                             <button class="btn btn-lg btn-success" type="submit">Shorten</button>
                         </div>

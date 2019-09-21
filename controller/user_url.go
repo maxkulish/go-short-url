@@ -16,8 +16,8 @@ const (
 	length  = 12
 	charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789"
 	scheme  = "http"
-	domain  = "localhost:3000"
-	route   = "short"
+	domain  = "localhost:8000"
+	route   = "s"
 )
 
 type UserURL struct {
@@ -34,8 +34,7 @@ func NewUserURL(c *cache.Cache) *UserURL {
 }
 
 type Alert struct {
-	Visible   bool
-	Message   string
+	FullURL   string
 	FinalLink string
 }
 
@@ -61,12 +60,12 @@ func (uu *UserURL) CreateURL(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "error creating short URL", http.StatusInternalServerError)
 	}
 
-	resTemplate, err := template.ParseFiles("template/index.gohtml")
+	resTemplate, err := template.ParseFiles("template/response.gohtml")
 	if err != nil {
 		panic(err)
 	}
 	alert := Alert{
-		Visible:   true,
+		FullURL:   uu.RawURL,
 		FinalLink: fmt.Sprintf("%s://%s/%s/%s", scheme, domain, route, uu.ShortURL),
 	}
 
