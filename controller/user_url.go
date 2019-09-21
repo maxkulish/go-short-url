@@ -39,6 +39,7 @@ type Alert struct {
 	FinalLink string
 }
 
+// POST /createURL
 func (uu *UserURL) CreateURL(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != "POST" {
@@ -78,6 +79,7 @@ func (uu *UserURL) CreateURL(w http.ResponseWriter, r *http.Request) {
 
 }
 
+//NormalizeURL takes inputURL from user and delete all tabs, spaces
 func (uu *UserURL) NormalizeURL(inputURL string) error {
 
 	uu.RawURL = strings.TrimSpace(inputURL)
@@ -92,6 +94,8 @@ func (uu *UserURL) NormalizeURL(inputURL string) error {
 	return nil
 }
 
+// CreateShortURL generate short URL
+// Example: Kiu61yaLBDdL
 func (uu *UserURL) CreateShortURL() error {
 
 	var seederRand = rand.New(rand.NewSource(time.Now().UnixNano()))

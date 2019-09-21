@@ -19,6 +19,7 @@ func NewShortURL(c *cache.Cache) *ShortURL {
 	}
 }
 
+// GET /short/:shortKey
 func (su *ShortURL) HandleShortURL(w http.ResponseWriter, r *http.Request) {
 
 	path := r.URL.Path
@@ -29,7 +30,5 @@ func (su *ShortURL) HandleShortURL(w http.ResponseWriter, r *http.Request) {
 	} else {
 		http.Redirect(w, r, string(bytes), http.StatusFound)
 	}
-
-	//_, _ = fmt.Fprintf(w, "%+v", bytes)
 
 }
