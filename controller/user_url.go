@@ -46,14 +46,21 @@ func (uu *UserURL) CreateURL(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := r.ParseForm(); err != nil {
-		http.Error(w, "internal server error", http.StatusInternalServerError)
+		http.Error(w, "could not parse form", http.StatusInternalServerError)
 		log.Fatal("error parsing form", err)
+		return
 	}
 
-	uu.RawURL = r.PostForm["full_url"][0]
+	postForm, ok := r.PostForm["full_url"]
+	if !ok {
+		http.Error(w, "could not parse form", http.StatusInternalServerError)
+		return
+	}
+	uu.RawURL = postForm[0]
 
 	if err := uu.NormalizeURL(uu.RawURL); err != nil {
 		http.Error(w, "invalid URL format", http.StatusInternalServerError)
+		return
 	}
 
 	if err := uu.CreateShortURL(); err != nil {
@@ -62,7 +69,9 @@ func (uu *UserURL) CreateURL(w http.ResponseWriter, r *http.Request) {
 
 	resTemplate, err := template.ParseFiles("template/response.gohtml")
 	if err != nil {
-		panic(err)
+		http.Error(w, "could not parse template file", http.StatusInternalServerError)
+		log.Fatal("error parsing template file", err)
+		return
 	}
 	alert := Alert{
 		FullURL:   uu.RawURL,

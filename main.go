@@ -2,6 +2,7 @@ package main
 
 import (
 	"go-short-url/cache"
+	"go-short-url/config"
 	"go-short-url/controller"
 	"html/template"
 	"log"
@@ -10,7 +11,7 @@ import (
 
 var homeTemplate *template.Template
 
-func home(w http.ResponseWriter, r *http.Request) {
+func homeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
 		http.Error(w, "Forbidden HTTP Method", http.StatusMethodNotAllowed)
 	}
@@ -34,12 +35,12 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", staticServer))
 
 	// GET method
-	http.HandleFunc("/", home)
+	http.HandleFunc("/", homeHandler)
 	// Post method
 	http.HandleFunc("/createURL", userURL.CreateURL)
 
 	// GET /short/:shortURL
 	http.HandleFunc("/s/", shortURL.HandleShortURL)
 
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	log.Fatal(http.ListenAndServe(config.HostURL, nil))
 }
