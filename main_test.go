@@ -4,7 +4,7 @@ import (
 	"go-short-url/cache"
 	"go-short-url/config"
 	"go-short-url/controller"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -49,7 +49,7 @@ func TestHomeHandler(t *testing.T) {
 				}
 			}
 
-			_, err = ioutil.ReadAll(res.Body)
+			_, err = io.ReadAll(res.Body)
 			if err != nil {
 				t.Fatalf("could not read response: %+v", err)
 			}
@@ -86,7 +86,7 @@ func TestCreateURL(t *testing.T) {
 	}
 	defer res.Body.Close()
 
-	b, err := ioutil.ReadAll(res.Body)
+	b, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("could not read response: %+v", err)
 	}
